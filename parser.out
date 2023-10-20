@@ -1,0 +1,129 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> INT
+Rule 2     expression -> ID
+Rule 3     expression -> expression OPERATOR expression
+Rule 4     expression -> PAREN expression PAREN
+Rule 5     stmt -> expression SEMICOLON
+
+Terminals, with rules where they appear
+
+ID                   : 2
+INT                  : 1
+OPERATOR             : 3
+PAREN                : 4 4
+SEMICOLON            : 5
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 3 3 4 5 0
+stmt                 : 
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . INT
+    (2) expression -> . ID
+    (3) expression -> . expression OPERATOR expression
+    (4) expression -> . PAREN expression PAREN
+
+    INT             shift and go to state 2
+    ID              shift and go to state 3
+    PAREN           shift and go to state 4
+
+    expression                     shift and go to state 1
+
+state 1
+
+    (0) S' -> expression .
+    (3) expression -> expression . OPERATOR expression
+
+    OPERATOR        shift and go to state 5
+
+
+state 2
+
+    (1) expression -> INT .
+
+    OPERATOR        reduce using rule 1 (expression -> INT .)
+    $end            reduce using rule 1 (expression -> INT .)
+    PAREN           reduce using rule 1 (expression -> INT .)
+
+
+state 3
+
+    (2) expression -> ID .
+
+    OPERATOR        reduce using rule 2 (expression -> ID .)
+    $end            reduce using rule 2 (expression -> ID .)
+    PAREN           reduce using rule 2 (expression -> ID .)
+
+
+state 4
+
+    (4) expression -> PAREN . expression PAREN
+    (1) expression -> . INT
+    (2) expression -> . ID
+    (3) expression -> . expression OPERATOR expression
+    (4) expression -> . PAREN expression PAREN
+
+    INT             shift and go to state 2
+    ID              shift and go to state 3
+    PAREN           shift and go to state 4
+
+    expression                     shift and go to state 6
+
+state 5
+
+    (3) expression -> expression OPERATOR . expression
+    (1) expression -> . INT
+    (2) expression -> . ID
+    (3) expression -> . expression OPERATOR expression
+    (4) expression -> . PAREN expression PAREN
+
+    INT             shift and go to state 2
+    ID              shift and go to state 3
+    PAREN           shift and go to state 4
+
+    expression                     shift and go to state 7
+
+state 6
+
+    (4) expression -> PAREN expression . PAREN
+    (3) expression -> expression . OPERATOR expression
+
+    PAREN           shift and go to state 8
+    OPERATOR        shift and go to state 5
+
+
+state 7
+
+    (3) expression -> expression OPERATOR expression .
+    (3) expression -> expression . OPERATOR expression
+
+  ! shift/reduce conflict for OPERATOR resolved as shift
+    $end            reduce using rule 3 (expression -> expression OPERATOR expression .)
+    PAREN           reduce using rule 3 (expression -> expression OPERATOR expression .)
+    OPERATOR        shift and go to state 5
+
+  ! OPERATOR        [ reduce using rule 3 (expression -> expression OPERATOR expression .) ]
+
+
+state 8
+
+    (4) expression -> PAREN expression PAREN .
+
+    OPERATOR        reduce using rule 4 (expression -> PAREN expression PAREN .)
+    $end            reduce using rule 4 (expression -> PAREN expression PAREN .)
+    PAREN           reduce using rule 4 (expression -> PAREN expression PAREN .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for OPERATOR in state 7 resolved as shift
